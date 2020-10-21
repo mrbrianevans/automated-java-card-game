@@ -11,3 +11,6 @@ Command line card game played by computer
 ## Bug reporting
 Any bugs you find in the code, create an issue in the issues tab of the GitHub repository page.
 
+## Game functionality
+The user can specify the number of players, n.
+Each player 
