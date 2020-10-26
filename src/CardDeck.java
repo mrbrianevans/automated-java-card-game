@@ -14,7 +14,7 @@ public class CardDeck {
 
     public void discardCard(Card card) {
         // add card to bottom of deck
-        this.hand[5] = card;
+        this.hand[3] = card;
     }
 
     public Card pickUpCard() {

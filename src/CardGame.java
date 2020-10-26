@@ -1,13 +1,15 @@
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
+import java.io.InputStreamReader;
 public class CardGame {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // request from command line
         System.out.println("Enter the number of players in the game: ");
-        final int n = Integer.parseInt(System.console().readLine());
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(in.readLine());
         System.out.println("Enter the filename for a pack of cards: ");
-        String filename = System.console().readLine();
+        String filename = in.readLine();
         try {
             Pack pack = new Pack(filename, n);
             Card[] cardsInPack = pack.getCards();
@@ -31,15 +33,14 @@ public class CardGame {
             boolean isWinner = false;
 
             int turns = 0;
-            while (!isWinner) {
-                for (Player player :
-                        players) {
-                    if (player.hasWon()) {
-                        System.out.println("Player " + player.getPlayerNumber() + " has won the game");
-                        isWinner = true;
-                    }
+            for (Player player :
+                    players) {
+                if (player.hasWon()) {
+                    System.out.println("Player " + player.getPlayerNumber() + " has won the game");
+                    isWinner = true;
                 }
-
+            }
+            while (!isWinner) {
                 int playersTurn = turns++ % n;
                 int discardToDeck = (playersTurn + 1) % n;
                 int pickUpFromDeck = playersTurn;
@@ -47,6 +48,10 @@ public class CardGame {
                         players[playersTurn].takeTurn(
                                 decks[pickUpFromDeck].pickUpCard(), discardToDeck, pickUpFromDeck)
                 );
+                if (players[playersTurn].hasWon()) {
+                    System.out.println("Player " + players[playersTurn].getPlayerNumber() + " has won the game");
+                    isWinner = true;
+                }
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
@@ -54,7 +59,5 @@ public class CardGame {
             System.out.println("Could not create new pack from file " + filename);
             System.out.println("Try a different file");
         }
-
-
     }
 }
