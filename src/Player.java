@@ -4,18 +4,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
-public class Player {
+public class Player extends Thread {
 
     private final Card[] hand;
     private final short playerNumber;
     private short cards;
     private final String path;
 
-    public Player(int playerNumber) throws IOException {
+    public Player(short playerNumber) throws IOException {
+        System.out.println("Created Player " + playerNumber + " Thread id=" + currentThread().getId() + currentThread().getName());
         this.hand = new Card[5];
         this.cards = 0;
-        this.playerNumber = (short) (playerNumber + 1);
-        this.path = "playerOutput" + File.separator + "player" + this.playerNumber + ".txt";
+        this.playerNumber = playerNumber;
+        this.path = "gameOutput" + File.separator + "player" + this.playerNumber + ".txt";
         File f = new File(this.path);
         f.getParentFile().mkdirs();
         if (!f.createNewFile()) {
@@ -47,6 +48,7 @@ public class Player {
             writeToPlayerFile("Player " + this.playerNumber + " initial hand " + handStringRepr());
         }
     }
+
 
     /**
      * @param pickUp the card picked up from the deck on players left
@@ -91,5 +93,30 @@ public class Player {
             if (card.getValue() != firstCard.getValue()) return false;
         }
         return true;
+    }
+
+    /**
+     * Informs the player that the game has ended because a player has won
+     *
+     * @param playerNumber the identifier of the player who has won the game
+     */
+    public void informPlayerHasWon(short playerNumber) throws IOException {
+        StringBuilder winOutput = new StringBuilder();
+        // check if player number is self
+        if (playerNumber == this.playerNumber) {
+            winOutput.append("player ").append(playerNumber).append(" wins");
+        } else {
+            winOutput.append("player ").append(playerNumber).append(" has informed player ")
+                    .append(this.playerNumber).append(" that player ").append(playerNumber).append(" has won");
+        }
+        writeToPlayerFile(winOutput.toString());
+        writeToPlayerFile("player " + this.playerNumber + " exits");
+
+        StringBuilder handOutput = new StringBuilder("player ").append(this.playerNumber).append(' ');
+        if (playerNumber == this.playerNumber) {
+            handOutput.append("final ");
+        }
+        handOutput.append("hand ").append(handStringRepr());
+        writeToPlayerFile(handOutput.toString());
     }
 }

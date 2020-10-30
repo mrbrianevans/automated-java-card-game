@@ -16,9 +16,10 @@ public class CardGame {
             Player[] players = new Player[n];
             CardDeck[] decks = new CardDeck[n];
 
-            for (int i = 0; i < n; i++) {
-                players[i] = new Player(i);
-                decks[i] = new CardDeck();
+            for (short i = 1; i <= n; i++) {
+                players[i - 1] = new Player(i); // creating thread because Player extends Thread
+                players[i - 1].start();
+                decks[i - 1] = new CardDeck(i);
             }
 
             // distribute the cards to players
@@ -32,7 +33,6 @@ public class CardGame {
 
             boolean isWinner = false;
 
-            int turns = 0;
             for (Player player :
                     players) {
                 if (player.hasWon()) {
@@ -40,18 +40,36 @@ public class CardGame {
                     isWinner = true;
                 }
             }
+            short winner = -1;
+            int turns = 0;
             while (!isWinner) {
                 int playersTurn = turns++ % n;
                 int discardToDeck = (playersTurn + 1) % n;
                 int pickUpFromDeck = playersTurn;
-                decks[discardToDeck].discardCard(
-                        players[playersTurn].takeTurn(
-                                decks[pickUpFromDeck].pickUpCard(), discardToDeck, pickUpFromDeck)
-                );
+
+                synchronized (players[playersTurn]) {
+                    System.out.println("players thread = " + players[playersTurn].getName());
+                    decks[discardToDeck].discardCard(
+                            players[playersTurn].takeTurn(
+                                    decks[pickUpFromDeck].pickUpCard(), discardToDeck, pickUpFromDeck)
+                    );
+                }
+
                 if (players[playersTurn].hasWon()) {
                     System.out.println("Player " + players[playersTurn].getPlayerNumber() + " has won the game");
                     isWinner = true;
+                    winner = players[playersTurn].getPlayerNumber();
                 }
+            }
+            // procedure for when there is a winner
+
+            // inform all players of winner
+            // inform decks of end of game
+            for (short i = 0; i < n; i++) {
+                synchronized (players[i]) {
+                    players[i].informPlayerHasWon(winner);
+                }
+                decks[i].writeContentsToFile();
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found");

@@ -37,7 +37,7 @@ public class PackTest {
     }
 
     @Test
-    public void getCards() {
+    public void testGetCards() {
         assertArrayEquals(this.pack.getCards(), cardArray);
     }
 }
