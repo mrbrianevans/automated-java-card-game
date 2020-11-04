@@ -3,16 +3,6 @@
 # Card game
 Command line card game played by computer
 
-## Contributing
-- Clone the repository to your local machine `git remote add origin https://github.com/mrbrianevans/automated-java-card-game.git`
-- Make edits and commit them locally `git commit -m "description of changes"`
-- Update your local repository with `git pull origin master`
-- Push your local repository to the origin hosted on GitHub `git push origin master`
-
-
-## Bug reporting
-Any bugs you find in the code, create an issue in the issues tab of the GitHub repository page.
-
 ## Game functionality
 The user can specify the number of players, n.
 Each player picks up and discards a card on their turn. 
@@ -20,3 +10,6 @@ Players are numbered from 1 to n.
 A player will keep cards that equal their player number. 
 If a player gets 4 of the same card, they win the game. 
 Players output their moves to text file in the folder `gameOutput`
+
+## Run the game
+To run the game, run the main method of the `CardGame` class. You will be prompted to enter the number of players. If you want to use the test pack of cards, enter 22 for number of players. When asked for the filename of the pack of cards, enter `testPack.txt`. The game should ensue, and a winner established. Players will output their turns to seperate files under the `gameOutput` directory, along with the final state of each card deck. 
