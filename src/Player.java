@@ -4,6 +4,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
+/**
+ * Player class extends Thread - this class handles the creation of a player and all of the methods that
+ * a player will need and use to ensure the game runs correctly. These include takeTurn, addCard hasWon etc.
+ * There is n amount of players - each player holds 4 cards which are distributed from the pack at the start
+ * of the game.
+ *
+ * @author 690024916 & 690023094
+ * @version 1.0
+ */
+
 public class Player extends Thread {
 
     private final Card[] hand;
@@ -11,6 +21,13 @@ public class Player extends Thread {
     private short cards;
     private final String path;
 
+    /**
+     * Creation of a player and all of the attributes the player will store; hand, cards, playerNumber and path.
+     * This method also ensure that a file directory to store game information on is created.
+     *
+     * @param playerNumber unique identifiable number for each player
+     * @throws IOException description null, when there is failed or interrupted IO operations.
+     */
     public Player(short playerNumber) throws IOException {
         System.out.println("Created Player " + playerNumber + " Thread id=" + currentThread().getId() + currentThread().getName());
         this.hand = new Card[5];
@@ -30,8 +47,12 @@ public class Player extends Thread {
         return playerNumber;
     }
 
+    /**
+     * Open, write to, and close players file
+     * @param output message to be written to file
+     * @throws IOException description null, when there is failed or interrupted IO operations.
+     */
     private void writeToPlayerFile(String output) throws IOException {
-        // open, write to, and close players file
         BufferedWriter writer = new BufferedWriter(new FileWriter(path, true));
         writer.write(output);
         writer.newLine();
@@ -51,6 +72,8 @@ public class Player extends Thread {
 
 
     /**
+     * takeTurn method handles all of the player actions when it is there turn in the game.
+     *
      * @param pickUp the card picked up from the deck on players left
      * @return card put down (discarded) by player. To be put at bottom of deck on players right.
      */
@@ -65,11 +88,11 @@ public class Player extends Thread {
             if (currentCard.getValue() != playerNumber) isPreferred = false;
         } while (isPreferred);
 
-        // Increment deck number for text file
+        // Increment deck number for text file.
         pickUpDeckNumber++;
         discardDeckNumber++;
 
-        this.hand[swapIndex] = pickUp; // add the picked up card to hand
+        this.hand[swapIndex] = pickUp; // Add the picked up card to hand.
         if (pickUp == null) throw new AssertionError("Picked up card is null");
         System.out.println("Player " + this.playerNumber + " draws " + pickUp.getValue() + " from deck " + pickUpDeckNumber);
         System.out.println("Player " + this.playerNumber + " discards " + currentCard.getValue() + " to deck " + discardDeckNumber);
@@ -96,9 +119,9 @@ public class Player extends Thread {
     }
 
     /**
-     * Informs the player that the game has ended because a player has won
+     * Informs the player that the game has ended because a player has won.
      *
-     * @param playerNumber the identifier of the player who has won the game
+     * @param playerNumber the identifier of the player who has won the game.
      */
     public void informPlayerHasWon(short playerNumber) throws IOException {
         StringBuilder winOutput = new StringBuilder();
