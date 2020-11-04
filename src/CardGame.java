@@ -57,7 +57,7 @@ public class CardGame {
                 int pickUpFromDeck = playersTurn;
 
                 synchronized (players[playersTurn]) {
-                    System.out.printf("player %d is running on %s", playersTurn + 1, players[playersTurn].getName());
+                    System.out.printf("player %d is running on %s%n", playersTurn + 1, players[playersTurn].getName());
                     decks[discardToDeck].discardCard(
                             players[playersTurn].takeTurn(
                                     decks[pickUpFromDeck].pickUpCard(), discardToDeck, pickUpFromDeck)
