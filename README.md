@@ -1,3 +1,5 @@
+![Build status](https://img.shields.io/badge/build-passing-brightgreen)
+![Tests stats](https://img.shields.io/badge/tests-tests%20failed%3A%200%2C%20passed%3A%2014-success)
 # Card game
 Command line card game played by computer
 

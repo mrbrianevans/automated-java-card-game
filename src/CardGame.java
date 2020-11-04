@@ -57,7 +57,7 @@ public class CardGame {
                 int pickUpFromDeck = playersTurn;
 
                 synchronized (players[playersTurn]) {
-                    System.out.println("players thread = " + players[playersTurn].getName());
+                    System.out.printf("player %d is running on %s", playersTurn + 1, players[playersTurn].getName());
                     decks[discardToDeck].discardCard(
                             players[playersTurn].takeTurn(
                                     decks[pickUpFromDeck].pickUpCard(), discardToDeck, pickUpFromDeck)
@@ -65,7 +65,6 @@ public class CardGame {
                 }
 
                 if (players[playersTurn].hasWon()) {
-                    System.out.println("Player " + players[playersTurn].getPlayerNumber() + " has won the game");
                     isWinner = true;
                     winner = players[playersTurn].getPlayerNumber();
                 }
