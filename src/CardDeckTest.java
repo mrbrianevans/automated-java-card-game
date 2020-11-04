@@ -3,6 +3,16 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * CardDeckTest will test all the main methods in CardDeck to ensure functionality of the program.
+ * Methods include testAddClass(), testFirstDeck() and testOtherDecks() as well as a setUp() method
+ * to initialise to cards.
+ *
+ *
+ * @author 690024916 & 690023094
+ * @version 1.0
+ */
+
 public class CardDeckTest {
     private CardDeck cardDeck;
 
@@ -17,12 +27,13 @@ public class CardDeckTest {
 
     @Test
     public void testAddCard() {
+        // Create one CardDeck and 5 Card's
         CardDeck addCardDeck = new CardDeck((short) 1);
         addCardDeck.addCard(new Card((short) 5));
     }
 
     /**
-     * tests the scenario of deck 1, which will have 3 or 4 cards at various points
+     * Tests the scenario of deck 1, which will have 3 or 4 cards at various points.
      */
     @Test
     public void testFirstDeck() {
@@ -35,7 +46,7 @@ public class CardDeckTest {
     }
 
     /**
-     * tests the scenario of decks other than deck 1, which will have 4 or 5 cards at various points
+     * Tests the scenario of decks other than deck 1, which will have 4 or 5 cards at various points.
      */
     @Test
     public void testOtherDecks() {
