@@ -13,4 +13,8 @@ Any bugs you find in the code, create an issue in the issues tab of the GitHub r
 
 ## Game functionality
 The user can specify the number of players, n.
-Each player 
+Each player picks up and discards a card on their turn. 
+Players are numbered from 1 to n. 
+A player will keep cards that equal their player number. 
+If a player gets 4 of the same card, they win the game. 
+Players output their moves to text file in the folder `gameOutput`

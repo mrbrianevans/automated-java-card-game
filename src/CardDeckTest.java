@@ -17,7 +17,7 @@ public class CardDeckTest {
     private CardDeck cardDeck;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         cardDeck = new CardDeck((short) 1);
         cardDeck.addCard(new Card((short) 1));
         cardDeck.addCard(new Card((short) 2));

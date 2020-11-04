@@ -1,7 +1,4 @@
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Random;
 
 /**
@@ -28,19 +25,21 @@ public class Player extends Thread {
      * @param playerNumber unique identifiable number for each player
      * @throws IOException description null, when there is failed or interrupted IO operations.
      */
-    public Player(short playerNumber) throws IOException {
-        System.out.println("Created Player " + playerNumber + " Thread id=" + currentThread().getId() + currentThread().getName());
+    public Player(short playerNumber) {
         this.hand = new Card[5];
         this.cards = 0;
         this.playerNumber = playerNumber;
         this.path = "gameOutput" + File.separator + "player" + this.playerNumber + ".txt";
-        File f = new File(this.path);
-        f.getParentFile().mkdirs();
-        if (!f.createNewFile()) {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(path));
-            writer.write("");
+        try {
+            File f = new File(this.path);
+            f.getParentFile().mkdirs();
+            if (!f.createNewFile()) {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+                writer.write("");
+            }
+        } catch (IOException e) {
+            System.out.printf("Failed to create player output file for player %d", playerNumber);
         }
-
     }
 
     public short getPlayerNumber() {
@@ -49,27 +48,35 @@ public class Player extends Thread {
 
     /**
      * Open, write to, and close players file
+     *
      * @param output message to be written to file
      * @throws IOException description null, when there is failed or interrupted IO operations.
      */
-    private void writeToPlayerFile(String output) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(path, true));
-        writer.write(output);
-        writer.newLine();
-        writer.close();
+    private void writeToPlayerFile(String output) {
+        // open, write to, and close players file
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(path, true));
+            writer.write(output);
+            writer.newLine();
+            writer.close();
+        } catch (FileNotFoundException e) {
+            System.out.printf("Could not find the file for player %d at %s", playerNumber, path);
+        } catch (IOException e) {
+            System.out.printf("Error writing to player%d file (%s)", playerNumber, path);
+        }
     }
 
-    private String handStringRepr() {
-        return this.hand[0] + " " + this.hand[1] + " " + this.hand[2] + " " + this.hand[3];
-    }
 
-    public void addCard(Card card) throws IOException {
+    public void addCard(Card card) {
         this.hand[cards++] = card;
         if (cards == 4) {
             writeToPlayerFile("Player " + this.playerNumber + " initial hand " + handStringRepr());
         }
     }
 
+    private String handStringRepr() {
+        return this.hand[0] + " " + this.hand[1] + " " + this.hand[2] + " " + this.hand[3];
+    }
 
     /**
      * takeTurn method handles all of the player actions when it is there turn in the game.
@@ -94,9 +101,6 @@ public class Player extends Thread {
 
         this.hand[swapIndex] = pickUp; // Add the picked up card to hand.
         if (pickUp == null) throw new AssertionError("Picked up card is null");
-        System.out.println("Player " + this.playerNumber + " draws " + pickUp.getValue() + " from deck " + pickUpDeckNumber);
-        System.out.println("Player " + this.playerNumber + " discards " + currentCard.getValue() + " to deck " + discardDeckNumber);
-        System.out.println("Player " + this.playerNumber + " current hand " + handStringRepr());
 
         writeToPlayerFile("Player " + this.playerNumber + " draws " + pickUp.getValue() + " from deck " + pickUpDeckNumber);
         writeToPlayerFile("Player " + this.playerNumber + " discards " + currentCard.getValue() + " to deck " + discardDeckNumber);
@@ -105,7 +109,7 @@ public class Player extends Thread {
         return currentCard;
     }
 
-    public boolean hasWon() throws IOException {
+    public boolean hasWon() {
         Card firstCard = this.hand[0];
         int counter = 0;
         for (Card card :
@@ -115,6 +119,7 @@ public class Player extends Thread {
                 throw new AssertionError("card in array loop is null. Hand: " + handStringRepr() + "; card: " + counter);
             if (card.getValue() != firstCard.getValue()) return false;
         }
+        System.out.printf("Player %d has won%n", playerNumber);
         return true;
     }
 
