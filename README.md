@@ -22,3 +22,27 @@ To run the game, run the main method of the `CardGame` class. You will be prompt
 
 ## Run the test suite
 To run the full test suite, build the `src` folder and then run the `CardGameTestSuite` class. This will automatically run the individual test files for each class.
+
+On Windows, the commands to do this are as follows:
+```cmd
+cd src
+```
+
+```cmd
+javac -cp .;../lib/junit-4.12.jar CardGameTestSuite.java
+```
+
+```cmd
+java -cp .;../lib/junit-4.12.jar;../lib/hamcrest-core-1.3.jar org.junit.runner.JUnitCore CardGameTestSuite
+```
+
+The expected output is:
+```
+JUnit version 4.12
+....Player 1 has won
+............Player 42 has won
+
+Time: 0.942
+
+OK (16 tests)
+```
