@@ -1,4 +1,4 @@
-![Build status](https://img.shields.io/badge/build-passing-brightgreen)
+![Build Status](https://travis-ci.com/mrbrianevans/automated-java-card-game.svg?branch=master)
 
 ![Tests stats](https://img.shields.io/badge/tests-tests%20failed%3A%200%2C%20passed%3A%2016-success)
 
