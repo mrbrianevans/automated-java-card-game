@@ -18,7 +18,7 @@ public class CardGameTest {
     public void testPlayGame() {
         try {
             // this test creates a new pack file of cards
-            int n = (int) Math.round(Math.random() * 100);
+            int n = (int) Math.round(Math.random() * 100)+1;
             String path = "testGamePack.txt";
             File f = new File(path);
             BufferedWriter writer;
