@@ -1,10 +1,13 @@
 ![Build status](https://img.shields.io/badge/build-passing-brightgreen)
 
-![Tests stats](https://img.shields.io/badge/tests-tests%20failed%3A%200%2C%20passed%3A%2015-success)
+![Tests stats](https://img.shields.io/badge/tests-tests%20failed%3A%200%2C%20passed%3A%2016-success)
 
-![Tests stats](https://img.shields.io/badge/code%20coverage-93%25%20of%20lines-brightgreen)
+![Tests stats](https://img.shields.io/badge/code%20coverage-88%25%20of%20lines-brightgreen)
 # Card game
 Command line card game played by computer
+
+Developed by 041595 & 050744
+
 
 ## Game functionality
 The user can specify the number of players, n.

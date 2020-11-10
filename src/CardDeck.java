@@ -8,7 +8,7 @@ import java.io.IOException;
  * the card will use. These include addCard to deck, discardCard to bottom of deck,
  * pickUpCard from deck and writeContentsToFile.
  *
- * @author 690024916 & 690023094
+ * @author 041595 & 050744
  * @version 1.0
  */
 

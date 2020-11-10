@@ -11,7 +11,7 @@ import static org.junit.Assert.assertArrayEquals;
  * Testing of Pack class using jUnit 4 testing conventions. In this test a pack is created in setUp().
  * Once a pack is generated a test to see if cards can be retrieved from the pack is run.
  *
- * @author 690024916 & 690023094
+ * @author 041595 & 050744
  * @version 1.0
  */
 

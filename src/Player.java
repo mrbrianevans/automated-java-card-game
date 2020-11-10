@@ -7,7 +7,7 @@ import java.util.Random;
  * There is n amount of players - each player holds 4 cards which are distributed from the pack at the start
  * of the game.
  *
- * @author 690024916 & 690023094
+ * @author 041595 & 050744
  * @version 1.0
  */
 
@@ -23,7 +23,6 @@ public class Player extends Thread {
      * This method also ensure that a file directory to store game information on is created.
      *
      * @param playerNumber unique identifiable number for each player
-     * @throws IOException description null, when there is failed or interrupted IO operations.
      */
     public Player(short playerNumber) {
         this.hand = new Card[5];
@@ -50,7 +49,6 @@ public class Player extends Thread {
      * Open, write to, and close players file
      *
      * @param output message to be written to file
-     * @throws IOException description null, when there is failed or interrupted IO operations.
      */
     private void writeToPlayerFile(String output) {
         // open, write to, and close players file
@@ -60,9 +58,9 @@ public class Player extends Thread {
             writer.newLine();
             writer.close();
         } catch (FileNotFoundException e) {
-            System.out.printf("Could not find the file for player %d at %s", playerNumber, path);
+            System.out.printf("Could not find the file for player %d at %s%n", playerNumber, path);
         } catch (IOException e) {
-            System.out.printf("Error writing to player%d file (%s)", playerNumber, path);
+            System.out.printf("Error writing to player%d file (%s)%n", playerNumber, path);
         }
     }
 
@@ -70,7 +68,7 @@ public class Player extends Thread {
     public void addCard(Card card) {
         this.hand[cards++] = card;
         if (cards == 4) {
-            writeToPlayerFile("Player " + this.playerNumber + " initial hand " + handStringRepr());
+            writeToPlayerFile("player " + this.playerNumber + " initial hand " + handStringRepr());
         }
     }
 
@@ -84,7 +82,7 @@ public class Player extends Thread {
      * @param pickUp the card picked up from the deck on players left
      * @return card put down (discarded) by player. To be put at bottom of deck on players right.
      */
-    public Card takeTurn(Card pickUp, int discardDeckNumber, int pickUpDeckNumber) throws IOException {
+    public Card takeTurn(Card pickUp, int discardDeckNumber, int pickUpDeckNumber) {
         boolean isPreferred = true;
         Random picker = new Random();
         Card currentCard;
@@ -126,7 +124,7 @@ public class Player extends Thread {
      *
      * @param playerNumber the identifier of the player who has won the game.
      */
-    public void informPlayerHasWon(short playerNumber) throws IOException {
+    public void informPlayerHasWon(short playerNumber) {
         StringBuilder winOutput = new StringBuilder();
         // check if player number is self
         if (playerNumber == this.playerNumber) {

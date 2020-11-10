@@ -3,7 +3,7 @@
  * the newly created object and to have an instance method to
  * return objects.
  *
- * @author 690024916 & 690023094
+ * @author 041595 & 050744
  * @version 1.0
  */
 public class Card {

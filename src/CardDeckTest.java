@@ -8,8 +8,7 @@ import static org.junit.Assert.assertEquals;
  * Methods include testAddClass(), testFirstDeck() and testOtherDecks() as well as a setUp() method
  * to initialise to cards.
  *
- *
- * @author 690024916 & 690023094
+ * @author 041595 & 050744
  * @version 1.0
  */
 

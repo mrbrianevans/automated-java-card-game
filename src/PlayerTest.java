@@ -14,14 +14,14 @@ import static org.junit.Assert.*;
  * PlayerTest class to test all of the functionality and logicality of Player.java. Testing includes playerNumber,
  * hasWonTrue and hasWonFalse.
  *
- * @author 690024916 & 690023094
+ * @author 041595 & 050744
  * @version 1.0
  */
 
 public class PlayerTest {
 
     @Test
-    public void getPlayerNumber() throws Exception {
+    public void getPlayerNumber() {
         // Generate player.
         short playerNumber = (short) Math.round((Math.random() * 100));
         Player player = new Player(playerNumber);
@@ -65,8 +65,14 @@ public class PlayerTest {
             Card[] actualHand = (Card[]) getPlayersHand.get(player);
             assertArrayEquals(expectedHand, actualHand);
 
-            // TODO: Test if the player writes initial hand to output
-
+            // Test if the player writes initial hand to output correctly
+            File playerFile = new File(String.format("gameOutput/player%d.txt", player.getPlayerNumber()));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(playerFile));
+            String initialHandWrite = bufferedReader.readLine();
+            String expectedInitialHandWrite = String.format("player %d initial hand %d %d %d %d",
+                    player.getPlayerNumber(), actualHand[0].getValue(), actualHand[1].getValue(),
+                    actualHand[2].getValue(), actualHand[3].getValue());
+            assertEquals(expectedInitialHandWrite, initialHandWrite);
         } catch (Exception e) {
             fail(String.format("Threw an exception: %s", e));
         }
@@ -97,7 +103,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void testTakeTurn() throws IOException {
+    public void testTakeTurn() {
         Random random = new Random();
         short preferredNumber = (short) random.nextInt(1000);
         Player player = new Player(preferredNumber);
@@ -134,7 +140,7 @@ public class PlayerTest {
             assertFalse(actualHand[1] == discardedCard || actualHand[3] == discardedCard);
 
             // test that the player printed the correct output to their file
-            File playerFile = new File(String.format("gameOutput/player%d.txt", preferredNumber));
+            File playerFile = new File(String.format("gameOutput/player%d.txt", player.getPlayerNumber()));
             BufferedReader bufferedReader = new BufferedReader(new FileReader(playerFile));
             bufferedReader.readLine();
             assertEquals(String.format("Player %d draws %d from deck %d",
@@ -173,6 +179,23 @@ public class PlayerTest {
 
     @Test
     public void informPlayerHasWon() {
-        // test that it writes to file correctly
+        //test that it writes to file correctly
+        Player player = new Player((short) 1);
+        for (int i = 0; i < 4; i++) {
+            player.addCard(new Card((short) i));
+        }
+        player.informPlayerHasWon((short) 5);
+        File playerFile = new File(String.format("gameOutput/player%d.txt", player.getPlayerNumber()));
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(playerFile));
+            bufferedReader.readLine(); // this discards the printout of "initial hand is 0 1 2 3"
+            assertEquals("player 5 has informed player 1 that player 5 has won", bufferedReader.readLine());
+            assertEquals("player 1 exits", bufferedReader.readLine());
+            assertEquals("player 1 hand 0 1 2 3", bufferedReader.readLine());
+        } catch (IOException e) {
+            System.out.println("Test failed to run because of IO error. This is not a failure of the game logic, only in the test");
+            System.out.println("e = " + e);
+        }
+
     }
 }

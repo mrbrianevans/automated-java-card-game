@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
  * and specifies the setting up of all the cards (through distributing of cards to players).
  * This class also will inform the relevant methods/threads when a player has won.
  *
- * @author 690024916 & 690023094
+ * @author 041595 & 050744
  * @version 1.0
  */
 public class CardGame {
@@ -24,6 +24,8 @@ public class CardGame {
 
         } catch (IOException e) {
             System.out.println("exception: " + e);
+        } catch (NumberFormatException e) {
+            System.out.println("Please enter a valid(int) number of players");
         }
     }
 
