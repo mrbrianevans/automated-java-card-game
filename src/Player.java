@@ -115,8 +115,6 @@ public class Player extends Thread {
         for (Card card :
                 this.hand) {
             if (counter++ == 4) break;
-            if (card == null)
-                throw new AssertionError("card in array loop is null. Hand: " + handStringRepr() + "; card: " + counter);
             if (card.getValue() != firstCard.getValue()) return false;
         }
         System.out.printf("Player %d has won%n", playerNumber);
