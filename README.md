@@ -17,7 +17,16 @@ A player will keep cards that equal their player number.
 If a player gets 4 of the same card, they win the game. 
 Players output their moves to text file in the folder `gameOutput`
 
-## Run the game
+## Run the game from JAR release
+1. Open terminal/command prompt in the directory where cards.jar is saved
+2. Run this command:
+```cmd
+java -jar cards.jar
+```
+3. Type the number of players and ENTER (if you want to use the test pack of cards, type 22)
+4. Type the filename of the pack of cards (testPack.txt will work)
+
+## Run the game from source code
 To run the game, run the main method of the `CardGame` class. You will be prompted to enter the number of players. If you want to use the test pack of cards, enter 22 for number of players. When asked for the filename of the pack of cards, enter `testPack.txt`. The game should ensue, and a winner established. Players will output their turns to seperate files under the `gameOutput` directory, along with the final state of each card deck.
 
 ### Windows command line instructions
