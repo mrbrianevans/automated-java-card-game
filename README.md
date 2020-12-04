@@ -6,7 +6,7 @@
 # Card game
 Command line card game played by computer
 
-Developed by 041595 & 050744
+Developed by Adam Tweedie & Brian Evans for a University of Exeter computer science degree module titled Software Development. This project was done as a pair programming assignment and attracted a mark of 80/100 in total (35/35 for the code).
 
 
 ## Game functionality
